@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 
-import { isChatBotVisible } from "../../utils/displayChecker";
 import { useBotStatesContext } from "../../context/BotStatesContext";
 import { useSettingsContext } from "../../context/SettingsContext";
 import { useBotRefsContext } from "../../context/BotRefsContext";
 import { useDispatchRcbEventInternal } from "./useDispatchRcbEventInternal";
+import { useChatWindowInternal } from "./useChatWindowInternal";
 import { RcbEvent } from "../../constants/RcbEvent";
 
 /**
@@ -31,6 +31,9 @@ export const useTextAreaInternal = () => {
 
 	// handles rcb events
 	const { dispatchRcbEvent } = useDispatchRcbEventInternal();
+
+	// handles chat window
+	const { getIsChatBotVisible } = useChatWindowInternal();
 
 	/**
 	 * Sets the text area value.
@@ -84,7 +87,7 @@ export const useTextAreaInternal = () => {
 			setTimeout(() => {
 				if (settings.general?.embedded) {
 					// for embedded chatbot, only do input focus if chatbot is still visible on page
-					if (isChatBotVisible(chatBodyRef?.current as HTMLDivElement)) {
+					if (getIsChatBotVisible()) {
 						inputRef.current?.focus();
 					}
 				} else {
@@ -95,7 +98,7 @@ export const useTextAreaInternal = () => {
 				}
 			}, 100)
 		}
-	}, []);
+	}, [inputRef, settings.general?.embedded, chatBodyRef, getIsChatBotVisible]);
 
 	/**
 	 * Focuses on text area.

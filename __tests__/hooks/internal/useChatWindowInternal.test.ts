@@ -141,3 +141,138 @@ describe("useChatWindowInternal Hook", () => {
 		expect(result.current.isChatWindowOpen).toBe(initialChatWindowOpen);
 	});
 });
+
+// Added tests for getIsChatBotVisible
+describe("useChatWindowInternal Hook - getIsChatBotVisible", () => {
+	let mockChatBodyRef: { current: HTMLDivElement | null };
+
+	beforeAll(() => {
+		// Set the viewport size for testing
+		Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+		Object.defineProperty(window, 'innerWidth', { value: 1024, configurable: true });
+	});
+
+	beforeEach(() => {
+		// Reset all mocks before each test
+		jest.clearAllMocks();
+		// Initialize mockChatBodyRef with a default div element
+		mockChatBodyRef = {
+			current: document.createElement('div')
+		};
+
+		// Mock useBotRefsContext to return our mockChatBodyRef
+		jest.mock("../../../src/context/BotRefsContext", () => ({
+			useBotRefsContext: () => ({ chatBodyRef: mockChatBodyRef })
+		}));
+	});
+
+	it("should return false when chatBodyRef.current is null", () => {
+		mockChatBodyRef.current = null;
+		const { result } = renderHook(() => useChatWindowInternal(), {
+			wrapper: TestChatBotProvider // Still using provider for other context values
+		});
+		expect(result.current.getIsChatBotVisible()).toBe(false);
+	});
+
+	it("should return true when element is fully visible in the viewport", () => {
+		// Ensure chatBodyRef.current is not null
+		if (mockChatBodyRef.current) {
+			mockChatBodyRef.current.getBoundingClientRect = jest.fn(() => ({
+				top: 100,
+				left: 100,
+				bottom: 200,
+				right: 200,
+				width: 100,
+				height: 100,
+				x: 100,
+				y: 100,
+				toJSON: () => ({ top: 100, left: 100, bottom: 200, right: 200, width: 100, height: 100 }),
+			}));
+		}
+
+		const { result } = renderHook(() => useChatWindowInternal(), {
+			wrapper: TestChatBotProvider
+		});
+		expect(result.current.getIsChatBotVisible()).toBe(true);
+	});
+
+	it("should return false when element's top is less than 0", () => {
+		if (mockChatBodyRef.current) {
+			mockChatBodyRef.current.getBoundingClientRect = jest.fn(() => ({
+				top: -1,
+				left: 100,
+				bottom: 200,
+				right: 200,
+				width: 100,
+				height: 100,
+				x: 100,
+				y: 100,
+				toJSON: () => ({ top: -1, left: 100, bottom: 200, right: 200, width: 100, height: 100 }),
+			}));
+		}
+		const { result } = renderHook(() => useChatWindowInternal(), {
+			wrapper: TestChatBotProvider
+		});
+		expect(result.current.getIsChatBotVisible()).toBe(false);
+	});
+
+	it("should return false when element's left is less than 0", () => {
+		if (mockChatBodyRef.current) {
+			mockChatBodyRef.current.getBoundingClientRect = jest.fn(() => ({
+				top: 100,
+				left: -1,
+				bottom: 200,
+				right: 200,
+				width: 100,
+				height: 100,
+				x: 100,
+				y: 100,
+				toJSON: () => ({ top: 100, left: -1, bottom: 200, right: 200, width: 100, height: 100 }),
+			}));
+		}
+		const { result } = renderHook(() => useChatWindowInternal(), {
+			wrapper: TestChatBotProvider
+		});
+		expect(result.current.getIsChatBotVisible()).toBe(false);
+	});
+
+	it("should return false when element's bottom exceeds window height", () => {
+		if (mockChatBodyRef.current) {
+			mockChatBodyRef.current.getBoundingClientRect = jest.fn(() => ({
+				top: 100,
+				left: 100,
+				bottom: 800, // Exceeds window.innerHeight (768)
+				right: 200,
+				width: 100,
+				height: 100,
+				x: 100,
+				y: 100,
+				toJSON: () => ({ top: 100, left: 100, bottom: 800, right: 200, width: 100, height: 100 }),
+			}));
+		}
+		const { result } = renderHook(() => useChatWindowInternal(), {
+			wrapper: TestChatBotProvider
+		});
+		expect(result.current.getIsChatBotVisible()).toBe(false);
+	});
+
+	it("should return false when element's right exceeds window width", () => {
+		if (mockChatBodyRef.current) {
+			mockChatBodyRef.current.getBoundingClientRect = jest.fn(() => ({
+				top: 100,
+				left: 100,
+				bottom: 200,
+				right: 1100, // Exceeds window.innerWidth (1024)
+				width: 100,
+				height: 100,
+				x: 100,
+				y: 100,
+				toJSON: () => ({ top: 100, left: 100, bottom: 200, right: 1100, width: 100, height: 100 }),
+			}));
+		}
+		const { result } = renderHook(() => useChatWindowInternal(), {
+			wrapper: TestChatBotProvider
+		});
+		expect(result.current.getIsChatBotVisible()).toBe(false);
+	});
+});

@@ -34,6 +34,26 @@ export const useChatWindowInternal = () => {
 	const { dispatchRcbEvent } = useDispatchRcbEventInternal();
 
 	/**
+	 * Checks if chatbot is visible (uses chatbot body as reference).
+	 */
+	const getIsChatBotVisible = useCallback(() => {
+		if (!chatBodyRef.current) {
+			return false;
+		}
+
+		const rect = chatBodyRef.current.getBoundingClientRect();
+		const windowHeight = (window.innerHeight ?? document.documentElement.clientHeight);
+		const windowWidth = (window.innerWidth ?? document.documentElement.clientWidth);
+
+		return (
+			rect.top >= 0 &&
+			rect.left >= 0 &&
+			rect.bottom <= windowHeight &&
+			rect.right <= windowWidth
+		);
+	}, [chatBodyRef]);
+
+	/**
 	 * Toggles chat window.
 	 * 
 	 * @param active boolean indicating desired state (if not specified, just flips existing state)
@@ -137,5 +157,6 @@ export const useChatWindowInternal = () => {
 		setViewportWidth,
 		toggleIsBotTyping,
 		scrollToBottom,
+		getIsChatBotVisible,
 	};
 };

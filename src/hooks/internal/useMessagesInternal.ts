@@ -2,7 +2,6 @@ import { useCallback } from "react";
 
 import { saveChatHistory } from "../../services/ChatHistoryService";
 import { createMessage } from "../../utils/messageBuilder";
-import { isChatBotVisible } from "../../utils/displayChecker";
 import { useSettingsContext } from "../../context/SettingsContext";
 import { useMessagesContext } from "../../context/MessagesContext";
 import { useBotStatesContext } from "../../context/BotStatesContext";
@@ -36,7 +35,7 @@ export const useMessagesInternal = () => {
 	const { streamMessageMap, chatBodyRef, paramsInputRef } = useBotRefsContext();
 
 	// handles chat window
-	const { scrollToBottom } = useChatWindowInternal();
+	const { scrollToBottom, getIsChatBotVisible } = useChatWindowInternal();
 
 	// handles rcb events
 	const { dispatchRcbEvent } = useDispatchRcbEventInternal();
@@ -78,7 +77,7 @@ export const useMessagesInternal = () => {
 		}
 
 		// if chatbot is embedded and visible, no need to notify
-		if (settings.general?.embedded && isChatBotVisible(chatBodyRef.current as HTMLDivElement)) {
+		if (settings.general?.embedded && getIsChatBotVisible()) {
 			shouldNotify = false;
 		}
 
@@ -100,7 +99,8 @@ export const useMessagesInternal = () => {
 			// and the scrolling does not properly reach the bottom
 			setTimeout(() => scrollToBottom(), 1);
 		}
-	}, [settings, chatBodyRef, syncedIsChatWindowOpenRef, syncedIsScrollingRef, playNotificationSound, scrollToBottom]);
+	}, [settings, chatBodyRef, syncedIsChatWindowOpenRef, syncedIsScrollingRef,
+		playNotificationSound, scrollToBottom, getIsChatBotVisible]);
 
 	/**
 	 * Simulates the streaming of a message from the bot.
