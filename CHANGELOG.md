@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## v2.0.0-beta.39 (12-06-2025)
+
+**Added:**
+- Added a new`getIsChatBotVisible` utility function to the `useChatWindow` hook
+
 ## v2.0.0-beta.38 (23-05-2025)
 
 **Fixed:**
