@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## v2.1.0 (13-06-2025)
+
+**Note:**
+The themes upstream repository has been moved to the [**React ChatBotify GitHub Org**](https://github.com/react-chatbotify). With this touchup, v2 is now officially stable! That said, refinements will still be ongoing - do feel free to report bugs or provide suggestions/feedback!
+
 ## v2.0.0-beta.39 (12-06-2025)
 
 **Added:**

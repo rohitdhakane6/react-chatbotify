@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200px" src="https://raw.githubusercontent.com/tjtanjin/react-chatbotify/main/assets/logo.png" />
+  <img width="200px" src="https://raw.githubusercontent.com/react-chatbotify/react-chatbotify/main/assets/logo.png" />
   <h1 align="center">React ChatBotify</h1>
 </p>
 
@@ -18,7 +18,7 @@
 
 ## Introduction
 
-For an introduction to the library itself, please refer to the project [*README*](https://github.com/tjtanjin/react-chatbotify/blob/main/README.md). This developer guide assumes its readers to have at least a **basic understanding** of [React](https://react.dev/) Applications. Otherwise, it is highly recommended for readers to refer to proper tutorial contents for the basics of React prior to developing the application. It is also worth noting that a major aspect of this guide is to cover **important design considerations** for the project. The designs are not perfect and you are encouraged to **think and explore possible improvements** for the library.
+For an introduction to the library itself, please refer to the project [*README*](https://github.com/react-chatbotify/react-chatbotify/blob/main/README.md). This developer guide assumes its readers to have at least a **basic understanding** of [React](https://react.dev/) Applications. Otherwise, it is highly recommended for readers to refer to proper tutorial contents for the basics of React prior to developing the application. It is also worth noting that a major aspect of this guide is to cover **important design considerations** for the project. The designs are not perfect and you are encouraged to **think and explore possible improvements** for the library.
 
 This guide **will not** dive into every single project detail because that is not sustainable in the long run. For simpler implementations that are not covered in this guide, you will find the code comments in the files themselves to be useful.
 
@@ -37,7 +37,7 @@ Before diving into the rest of the contents in our developer guide, the followin
 ## Setup
 
 Setting up the project is relatively simple. Before you begin, ensure that you have **at least NodeJS 16.x** installed.
-1) Fork the [project repository](https://github.com/tjtanjin/react-chatbotify).
+1) Fork the [project repository](https://github.com/react-chatbotify/react-chatbotify).
 2) Clone the **forked project** into your desired directory with:
     ```
     git clone the-forked-project.git
@@ -51,7 +51,7 @@ Setting up the project is relatively simple. Before you begin, ensure that you h
     npm run start
     ```
 
-Go ahead and start making code changes to the project (hot module reloading is enabled). You may also find instructions for [**testing**](https://github.com/tjtanjin/react-chatbotify/blob/main/docs/DeveloperGuide.md#testing) and [**opening pull requests**](https://github.com/tjtanjin/react-chatbotify/blob/main/docs/DeveloperGuide.md#pull-requests) relevant if you're looking to contribute back to the project!
+Go ahead and start making code changes to the project (hot module reloading is enabled). You may also find instructions for [**testing**](https://github.com/react-chatbotify/react-chatbotify/blob/main/docs/DeveloperGuide.md#testing) and [**opening pull requests**](https://github.com/react-chatbotify/react-chatbotify/blob/main/docs/DeveloperGuide.md#pull-requests) relevant if you're looking to contribute back to the project!
 
 ## Project Structure
 
@@ -191,7 +191,7 @@ It is worth noting that there are both internal and external hooks. Why the dist
 
 ### Themes
 
-Themes is a **new concept** introduced in **v2 of the chatbot**. Strictly speaking, there's a fair bit of design considerations that went into it as well. I contemplated including this inside the previous section on [**Design**](#design), but figured themes is a huge feature/concept by itself given that it relies on a separate [**themes repository**](https://github.com/tjtanjin/react-chatbotify-themes).
+Themes is a **new concept** introduced in **v2 of the chatbot**. Strictly speaking, there's a fair bit of design considerations that went into it as well. I contemplated including this inside the previous section on [**Design**](#design), but figured themes is a huge feature/concept by itself given that it relies on a separate [**themes repository**](https://github.com/react-chatbotify/community-themes).
 
 With that said, I won't be diving into too much details here as I've written a separate article previously on the solutioning for themes. You can find that article [**here**](https://medium.com/@tjtanjin/behind-the-scenes-solutioning-for-react-chatbotifys-themes-a59576043d4a) if you are keen or give the [**themes concept**](https://react-chatbotify.com/docs/concepts/themes) a read as well.
 
@@ -256,7 +256,7 @@ Integration tests are done via [**cypress**](https://www.cypress.io/), and you w
 
 ### Compatibility Test
 
-Compatibility tests are currently **only** done via the [**CI/CD pipeline**](https://github.com/tjtanjin/react-chatbotify/actions). It basically does the following steps:
+Compatibility tests are currently **only** done via the [**CI/CD pipeline**](https://github.com/react-chatbotify/react-chatbotify/actions). It basically does the following steps:
 
 1) Packages the library
 2) Sets up a basic project in **React 16, 17, 18 and 19**

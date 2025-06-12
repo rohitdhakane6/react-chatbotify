@@ -18,19 +18,19 @@ Each project includes a brief description, links to the live website, the option
 
 ### React ChatBotify
 
-![image](https://github.com/tjtanjin/react-chatbotify/assets/43908963/f30858d9-f38e-4049-912f-1844d05a509f)
+![image](https://github.com/react-chatbotify/react-chatbotify/assets/43908963/f30858d9-f38e-4049-912f-1844d05a509f)
 
 **Description:** A documentation website for the React ChatBotify library
 
 **Website Link:** https://react-chatbotify.com
 
-**Repository Link:** https://github.com/tjtanjin/react-chatbotify-docs
+**Repository Link:** https://github.com/react-chatbotify/react-chatbotify-docs
 
 ## Portfolio Projects
 
 ### Web development portfolio
 
-![image](https://github.com/tjtanjin/react-chatbotify/assets/43908963/9fe0141a-41da-4b98-9bd6-ff7925fd5750)
+![image](https://github.com/react-chatbotify/react-chatbotify/assets/43908963/9fe0141a-41da-4b98-9bd6-ff7925fd5750)
 
 **Description:** A portfolio showcasing all my projects, experience and skills.
 
@@ -40,13 +40,13 @@ Each project includes a brief description, links to the live website, the option
 
 ## Education Projects
 
-Check back later, or add yours [here](https://github.com/tjtanjin/react-chatbotify/discussions/11)!
+Check back later, or add yours [here](https://github.com/react-chatbotify/react-chatbotify/discussions/11)!
 
 ## Entertainment Projects
 
 ### TavernCraft Website
 
-![image](https://github.com/tjtanjin/react-chatbotify/assets/43908963/135d7ae3-779d-4892-a548-1cf544344d63)
+![image](https://github.com/react-chatbotify/react-chatbotify/assets/43908963/135d7ae3-779d-4892-a548-1cf544344d63)
 
 **Description:** An informative website for TavernCraft, a free-to-play minecraft server!
 
@@ -56,14 +56,14 @@ Check back later, or add yours [here](https://github.com/tjtanjin/react-chatboti
 
 ## Healthcare Projects
 
-Check back later, or add yours [here](https://github.com/tjtanjin/react-chatbotify/discussions/11)!
+Check back later, or add yours [here](https://github.com/react-chatbotify/react-chatbotify/discussions/11)!
 
 ## Other Projects
 
-Check back later, or add yours [here](https://github.com/tjtanjin/react-chatbotify/discussions/11)!
+Check back later, or add yours [here](https://github.com/react-chatbotify/react-chatbotify/discussions/11)!
 
 ## Submit Your Project
 
-Want to see your project featured here? Head over [here](https://github.com/tjtanjin/react-chatbotify/discussions/11) to submit your project. We can't wait to showcase your work!
+Want to see your project featured here? Head over [here](https://github.com/react-chatbotify/react-chatbotify/discussions/11) to submit your project. We can't wait to showcase your work!
 
 Happy coding! 🚀

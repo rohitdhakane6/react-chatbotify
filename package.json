@@ -13,7 +13,7 @@
   "files": [
     "./dist"
   ],
-  "version": "2.0.0-beta.39",
+  "version": "2.1.0",
   "description": "A modern React library for creating flexible and extensible chatbots.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -45,7 +45,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tjtanjin/react-chatbotify"
+    "url": "https://github.com/react-chatbotify/react-chatbotify"
   },
   "peerDependencies": {
     "react": ">=16.14.0",
