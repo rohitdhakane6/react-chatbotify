@@ -92,7 +92,7 @@ Typescript
 For a thorough walkthrough on getting started, you may refer to the [**Quickstart Guide**](https://react-chatbotify.com/docs/introduction/quickstart/) on the [**Documentation Website**](https://react-chatbotify.com/).
 
 ### Documentation
-A full documentation (along with a [**live playground**](https://react-chatbotify.com/playground/)) for the library can be found at the following link:
+A full documentation (along with a [**live playground**](https://react-chatbotify.com/docs/v2/playground/)) for the library can be found at the following link:
 
 - https://react-chatbotify.com/
 
