@@ -18,6 +18,7 @@ import { useBotStatesContext } from "../context/BotStatesContext";
 import { useSettingsContext } from "../context/SettingsContext";
 import { useStylesContext } from "../context/StylesContext";
 import { Plugin } from "../types/Plugin";
+import { Slots } from "../types/Slots";
 
 import "./ChatBotContainer.css";
 
@@ -25,11 +26,14 @@ import "./ChatBotContainer.css";
  * Integrates, loads plugins and contains the various components that makeup the chatbot.
  * 
  * @param plugins plugins to initialize
+ * @param slots slots to inject custom headers, footers etc
  */
 const ChatBotContainer = ({
 	plugins,
+	slots,
 }: {
 	plugins?: Array<Plugin>;
+	slots?: Slots;
 }) => {
 	// handles platform
 	const isDesktop = useIsDesktopInternal();
@@ -166,11 +170,22 @@ const ChatBotContainer = ({
 						</>
 					}
 					<div style={getChatWindowStyle()} className="rcb-chat-window">
-						{settings.general?.showHeader && <ChatBotHeader buttons={headerButtons}/>}
-						<ChatBotBody/>
-						<ToastContainer/>
-						{settings.general?.showInputRow && <ChatBotInput buttons={chatInputButtons}/>}
-						{settings.general?.showFooter && <ChatBotFooter buttons={footerButtons}/>}
+						{(() => {
+							const HeaderComponent = slots?.header || ChatBotHeader;
+							const BodyComponent = slots?.body || ChatBotBody;
+							const InputComponent = slots?.input || ChatBotInput;
+							const FooterComponent = slots?.footer || ChatBotFooter;
+
+							return (
+								<>
+									{settings.general?.showHeader && <HeaderComponent buttons={headerButtons} />}
+									<BodyComponent />
+									<ToastContainer />
+									{settings.general?.showInputRow && <InputComponent buttons={chatInputButtons} />}
+									{settings.general?.showFooter && <FooterComponent buttons={footerButtons} />}
+								</>
+							);
+						})()}
 					</div>
 				</div>
 			}

@@ -9,6 +9,7 @@ import { Styles } from "../types/Styles";
 import { Flow } from "../types/Flow";
 import { Theme } from "../types/Theme";
 import { Plugin } from "../types/Plugin";
+import { Slots } from "../types/Slots";
 import { WelcomeFlow } from "../constants/internal/WelcomeFlow";
 
 /**
@@ -20,6 +21,7 @@ import { WelcomeFlow } from "../constants/internal/WelcomeFlow";
  * @param styles styles to setup the bot
  * @param themes themes to apply to the bot
  * @param plugins plugins to initialize
+ * @param slots slots to inject custom headers, footers etc
  */
 const ChatBot = ({
 	id,
@@ -28,6 +30,7 @@ const ChatBot = ({
 	styles,
 	themes,
 	plugins,
+	slots,
 }: {
 	id?: string;
 	flow?: Flow;
@@ -35,6 +38,7 @@ const ChatBot = ({
 	styles?: Styles;
 	themes?: Theme | Array<Theme>;
 	plugins?: Array<Plugin>;
+	slots?: Slots;
 }) => {
 
 	// handles cases where any props are empty
@@ -69,7 +73,7 @@ const ChatBot = ({
 			<ChatBotLoader styleRootRef={styleRootRef} id={finalBotId} flow={finalFlow} settings={finalSettings}
 				styles={finalStyles} themes={finalThemes} plugins={finalPlugins} setConfigLoaded={setConfigLoaded}
 			/>
-			{configLoaded && <ChatBotContainer plugins={plugins} />}
+			{configLoaded && <ChatBotContainer plugins={plugins} slots={slots} />}
 		</>
 	)
 
