@@ -171,10 +171,10 @@ const ChatBotContainer = ({
 					}
 					<div style={getChatWindowStyle()} className="rcb-chat-window">
 						{(() => {
-							const HeaderComponent = slots?.header || ChatBotHeader;
-							const BodyComponent = slots?.body || ChatBotBody;
-							const InputComponent = slots?.input || ChatBotInput;
-							const FooterComponent = slots?.footer || ChatBotFooter;
+							const HeaderComponent = slots?.chatBotHeader || ChatBotHeader;
+							const BodyComponent = slots?.chatBotBody || ChatBotBody;
+							const InputComponent = slots?.chatBotInput || ChatBotInput;
+							const FooterComponent = slots?.chatBotFooter || ChatBotFooter;
 
 							return (
 								<>

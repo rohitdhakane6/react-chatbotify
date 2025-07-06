@@ -7,11 +7,11 @@ import React from "react";
  */
 export type Slots = {
 	/** Custom component to render the header of the ChatBot. */
-	header?: React.ElementType;
+	chatBotHeader?: React.ElementType;
 	/** Custom component to render the body/content area of the ChatBot. */
-	body?: React.ElementType;
+	chatBotBody?: React.ElementType;
 	/** Custom component to render the input area of the ChatBot. */
-	input?: React.ElementType;
+	chatBotInput?: React.ElementType;
 	/** Custom component to render the footer of the ChatBot. */
-	footer?: React.ElementType;
+	chatBotFooter?: React.ElementType;
 }
