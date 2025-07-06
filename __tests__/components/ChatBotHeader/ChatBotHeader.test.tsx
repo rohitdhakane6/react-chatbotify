@@ -55,7 +55,8 @@ describe("ChatBotHeader Component", () => {
 		// There is no other way to directly get the header container based on the current component structure
 		// We can modify the component to add a ref or use data-testid to get the header container
 		const headerText = screen.getByText("Mock Title");
-		const headerContainer = headerText.parentNode?.parentNode?.querySelector(".rcb-chat-header-container");
+		const headerContainer = headerText
+			.parentNode?.parentNode?.parentNode?.querySelector(".rcb-chat-header-container");
 		const avatar = headerContainer?.querySelector(".rcb-bot-avatar");
 
 		// check if the elements are in the document
@@ -104,7 +105,8 @@ describe("ChatBotHeader Component", () => {
 		// There is no other way to directly get the header container based on the current component structure
 		// We can modify the component to add a ref or use data-testid to get the header container
 		const headerText = screen.getByText("Mock Title");
-		const headerContainer = headerText.parentNode?.parentNode?.querySelector(".rcb-chat-header-container");
+		const headerContainer = headerText
+			.parentNode?.parentNode?.parentNode?.querySelector(".rcb-chat-header-container");
 		const avatar = headerContainer?.querySelector(".rcb-bot-avatar");
 
 		// check if the elements are in the document
