@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## v2.2.0 (06-07-2025)
+
+**Fixed:**
+- Improved/fixed header title styles to be consistent when updated with just a `string` type
+
+**Added:**
+- Added a new `slots` prop to `ChatBot` that provides composability of major UI components (e.g. header, footer) (docs updated [**here**](https://react-chatbotify.com/docs/concepts/slots))
+
 ## v2.1.0 (13-06-2025)
 
 **Note:**
