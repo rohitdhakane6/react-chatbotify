@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, isValidElement } from "react";
 
 import { useSettingsContext } from "../../context/SettingsContext";
 import { useStylesContext } from "../../context/StylesContext";
@@ -33,7 +33,12 @@ const ChatBotHeader = ({ buttons }: { buttons: JSX.Element[] }) => {
 						className="rcb-bot-avatar"
 					/>
 				}
-				{settings.header?.title}
+				{isValidElement(settings.header?.title) ?
+					settings.header?.title :
+					<div style={{margin: 0, fontSize: 20, fontWeight: "bold"}}>
+						{settings.header?.title}
+					</div>
+				}
 			</div>
 			<div className="rcb-chat-header">
 				{buttons?.map((button: JSX.Element, index: number) => 
