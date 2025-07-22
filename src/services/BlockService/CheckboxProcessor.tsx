@@ -1,4 +1,4 @@
-import UserCheckboxes from "../../components/ChatBotBody/BotCheckboxes/BotCheckboxes";
+import BotCheckboxes from "../../components/ChatBotBody/BotCheckboxes/BotCheckboxes";
 import { Block } from "../../types/Block";
 import { Params } from "../../types/Params";
 
@@ -65,7 +65,7 @@ export const processCheckboxes = async (block: Block, params: Params) => {
 
 	const path = params.currPath as string;
 	const content = (
-		<UserCheckboxes checkboxes={parsedCheckboxes} checkedItems={checkedItems} path={path} />
+		<BotCheckboxes checkboxes={parsedCheckboxes} checkedItems={checkedItems} path={path} />
 	);
 	await params.injectMessage(content);
 }

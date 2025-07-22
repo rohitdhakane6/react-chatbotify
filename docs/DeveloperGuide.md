@@ -78,7 +78,7 @@ As its name suggest, the *assets* folder contains **media content** (such as **i
 
 While users of this library may perceive the chatbot as one entire component, it is actually made up of **many smaller components**. A quick glance at the *components* folder will give you an idea of how many parts are actually being put together.
 
-At the high level, there are the more obvious components such as the *ChatBotHeader*, *ChatBotBody* and *ChatBotFooter*. However, you may notice that even something seemingly minor such as the *LoadingSpinner* is also its own component. In fact, if you dive into some of them, they actually have their own subcomponents as well (e.g. *Buttons/AudioButton*, *ChatBotBody/UserOptions*).
+At the high level, there are the more obvious components such as the *ChatBotHeader*, *ChatBotBody* and *ChatBotFooter*. However, you may notice that even something seemingly minor such as the *LoadingSpinner* is also its own component. In fact, if you dive into some of them, they actually have their own subcomponents as well (e.g. *Buttons/AudioButton*, *ChatBotBody/BotOptions*).
 
 In general, each component should try to adhere to the Single Responsibility Principle (i.e. it should only handle a single piece of functionality). This is a good rule of thumb, but it also depends on  **how complex the functionality** for a part is. If you're creating a new component **and have the intention to contribute back to the upstream repository**, it probably means you're creating a new functionality and you're encouraged to [**discuss with the team**](https://discord.gg/6R4DK4G5Zh).
 

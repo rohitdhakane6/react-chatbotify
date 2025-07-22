@@ -21,7 +21,7 @@ jest.mock("../../../src/hooks/internal/useSubmitInputInternal", () => ({
 	useSubmitInputInternal: jest.fn(),
 }));
 
-describe("UserCheckboxes Component", () => {
+describe("BotCheckboxes Component", () => {
 	const mockSettingsContext = {
 		settings: {
 			general: {

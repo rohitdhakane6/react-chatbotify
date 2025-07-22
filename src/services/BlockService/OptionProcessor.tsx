@@ -1,4 +1,4 @@
-import UserOptions from "../../components/ChatBotBody/BotOptions/BotOptions";
+import BotOptions from "../../components/ChatBotBody/BotOptions/BotOptions";
 import { Block } from "../../types/Block";
 import { Params } from "../../types/Params";
 
@@ -46,6 +46,6 @@ export const processOptions = async (block: Block, params: Params) => {
 	// note that sendOutput has no default here, as it fallback to the global
 	// settings.chatInput.sendOptionOutput inside user options component if not specified
 	const path = params.currPath as string;
-	const content = <UserOptions options={parsedOptions} path={path} />
+	const content = <BotOptions options={parsedOptions} path={path} />
 	await params.injectMessage(content);
 }

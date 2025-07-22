@@ -21,7 +21,7 @@ jest.mock("../../../src/hooks/internal/useSubmitInputInternal", () => ({
 	useSubmitInputInternal: jest.fn(),
 }));
 
-describe("UserOptions Component", () => {
+describe("BotOptions Component", () => {
 	// Mock implementation for contexts
 	const mockSettingsContext = {
 		settings: {

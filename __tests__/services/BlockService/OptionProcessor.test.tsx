@@ -5,7 +5,7 @@ import { expect } from "@jest/globals";
 import { processOptions } from "../../../src/services/BlockService/OptionProcessor";
 import { Params } from "../../../src/types/Params";
 import { Block } from "../../../src/types/Block";
-import UserOptions from "../../../src/components/ChatBotBody/UserOptions/UserOptions";
+import BotOptions from "../../../src/components/ChatBotBody/BotOptions/BotOptions";
 
 describe("processOptions", () => {
 	let mockParams: Params;
@@ -35,7 +35,7 @@ describe("processOptions", () => {
 
 		await processOptions(mockBlock, mockParams);
 		expect(mockParams.injectMessage).toHaveBeenCalledWith(
-			<UserOptions options={{ items: staticOptions, reusable: false }} path={"somePath"} />
+			<BotOptions options={{ items: staticOptions, reusable: false }} path={"somePath"} />
 		);
 	});
 
@@ -48,7 +48,7 @@ describe("processOptions", () => {
     
 		expect(mockBlock.options).toHaveBeenCalledWith(mockParams);
 		expect(mockParams.injectMessage).toHaveBeenCalledWith(
-			<UserOptions options={{ items: dynamicOptions, reusable: false }} path={"somePath"} />
+			<BotOptions options={{ items: dynamicOptions, reusable: false }} path={"somePath"} />
 		);
 	});
 
@@ -60,7 +60,7 @@ describe("processOptions", () => {
 		await processOptions(mockBlock, mockParams);
 		expect(mockBlock.options).toHaveBeenCalledWith(mockParams);
 		expect(mockParams.injectMessage).toHaveBeenCalledWith(
-			<UserOptions options={{ items: asyncOptions, reusable: false }} path={"somePath"} />
+			<BotOptions options={{ items: asyncOptions, reusable: false }} path={"somePath"} />
 		);
 	});
 
@@ -71,7 +71,7 @@ describe("processOptions", () => {
 
 		await processOptions(mockBlock, mockParams);
 		expect(mockParams.injectMessage).toHaveBeenCalledWith(
-			<UserOptions options={{ items: staticOptions, reusable: false }} path={"somePath"} />
+			<BotOptions options={{ items: staticOptions, reusable: false }} path={"somePath"} />
 		);
 	});
 
