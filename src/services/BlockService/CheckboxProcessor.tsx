@@ -1,4 +1,4 @@
-import UserCheckboxes from "../../components/ChatBotBody/UserCheckboxes/UserCheckboxes";
+import UserCheckboxes from "../../components/ChatBotBody/BotCheckboxes/BotCheckboxes";
 import { Block } from "../../types/Block";
 import { Params } from "../../types/Params";
 

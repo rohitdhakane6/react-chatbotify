@@ -1,4 +1,4 @@
-import UserOptions from "../../components/ChatBotBody/UserOptions/UserOptions";
+import UserOptions from "../../components/ChatBotBody/BotOptions/BotOptions";
 import { Block } from "../../types/Block";
 import { Params } from "../../types/Params";
 

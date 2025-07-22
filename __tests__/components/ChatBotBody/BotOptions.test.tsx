@@ -5,7 +5,7 @@ import { useSettingsContext } from "../../../src/context/SettingsContext";
 import { useStylesContext } from "../../../src/context/StylesContext";
 import { usePathsContext } from "../../../src/context/PathsContext";
 import { useSubmitInputInternal } from "../../../src/hooks/internal/useSubmitInputInternal";
-import UserOptions from "../../../src/components/ChatBotBody/UserOptions/UserOptions";
+import BotOptions from "../../../src/components/ChatBotBody/BotOptions/BotOptions";
 
 // Mocking the context and hook
 jest.mock("../../../src/context/SettingsContext", () => ({
@@ -64,7 +64,7 @@ describe("UserOptions Component", () => {
 
 	test("renders the options correctly", () => {
 		const options = { items: ["Option 1", "Option 2"], sendOutput: true, reusable: false };
-		render(<UserOptions options={options} path="path1" />);
+		render(<BotOptions options={options} path="path1" />);
 
 		// Checking if the options are rendered correctly
 		expect(screen.getByText("Option 1")).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe("UserOptions Component", () => {
 
 	test("handles mouse enter and leave events", () => {
 		const options = { items: ["Option 1"], sendOutput: true, reusable: false };
-		render(<UserOptions options={options} path="path1" />);
+		render(<BotOptions options={options} path="path1" />);
     
 		const optionElement = screen.getByText("Option 1");
 
@@ -88,7 +88,7 @@ describe("UserOptions Component", () => {
 
 	test("disables the option when clicked and not reusable", () => {
 		const options = { items: ["Option 1"], sendOutput: true, reusable: false };
-		render(<UserOptions options={options} path="path1" />);
+		render(<BotOptions options={options} path="path1" />);
     
 		const optionElement = screen.getByText("Option 1");
 
@@ -105,7 +105,7 @@ describe("UserOptions Component", () => {
 
 	test("respects the sendOutput setting", () => {
 		const options = { items: ["Option 1"], reusable: true };
-		render(<UserOptions options={options} path="path1" />);
+		render(<BotOptions options={options} path="path1" />);
     
 		const optionElement = screen.getByText("Option 1");
 

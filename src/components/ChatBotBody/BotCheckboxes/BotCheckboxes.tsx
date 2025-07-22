@@ -7,7 +7,7 @@ import { useStylesContext } from "../../../context/StylesContext";
 import { usePathsContext } from "../../../context/PathsContext";
 import { Flow } from "../../../types/Flow";
 
-import "./UserCheckboxes.css";
+import "./BotCheckboxes.css";
 
 /**
  * Supports showing of checkboxes for user to mark.
@@ -16,7 +16,7 @@ import "./UserCheckboxes.css";
  * @param checkedItems set representing items marked
  * @param path path associated with the current block
  */
-const UserCheckboxes = ({
+const BotCheckboxes = ({
 	checkboxes,
 	checkedItems,
 	path,
@@ -155,4 +155,4 @@ const UserCheckboxes = ({
 	);
 };
 
-export default UserCheckboxes;
+export default BotCheckboxes;

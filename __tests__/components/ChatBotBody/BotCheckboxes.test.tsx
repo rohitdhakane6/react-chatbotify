@@ -5,7 +5,7 @@ import { useSettingsContext } from "../../../src/context/SettingsContext";
 import { useStylesContext } from "../../../src/context/StylesContext";
 import { usePathsContext } from "../../../src/context/PathsContext";
 import { useSubmitInputInternal } from "../../../src/hooks/internal/useSubmitInputInternal";
-import UserCheckboxes from "../../../src/components/ChatBotBody/UserCheckboxes/UserCheckboxes";
+import BotCheckboxes from "../../../src/components/ChatBotBody/BotCheckboxes/BotCheckboxes";
 
 // Mocking the context and hook
 jest.mock("../../../src/context/SettingsContext", () => ({
@@ -65,7 +65,7 @@ describe("UserCheckboxes Component", () => {
 
 	it("renders checkboxes correctly", () => {
 		const checkboxes = { items: ["Checkbox 1", "Checkbox 2"], min: 1, max: 2 };
-		render(<UserCheckboxes checkboxes={checkboxes} checkedItems={new Set()} path="path1" />);
+		render(<BotCheckboxes checkboxes={checkboxes} checkedItems={new Set()} path="path1" />);
 
 		expect(screen.getByText("Checkbox 1")).toBeInTheDocument();
 		expect(screen.getByText("Checkbox 2")).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe("UserCheckboxes Component", () => {
 	it("allows selecting and unselecting checkboxes", () => {
 		const checkboxes = { items: ["Checkbox 1", "Checkbox 2"], max: 2 };
 		const checkedItems = new Set<string>();
-		render(<UserCheckboxes checkboxes={checkboxes} checkedItems={checkedItems} path="path1" />);
+		render(<BotCheckboxes checkboxes={checkboxes} checkedItems={checkedItems} path="path1" />);
 
 		const checkbox1 = screen.getByText("Checkbox 1");
 		const checkbox2 = screen.getByText("Checkbox 2");
@@ -92,7 +92,7 @@ describe("UserCheckboxes Component", () => {
 	it("prevents selecting more checkboxes than max limit", () => {
 		const checkboxes = { items: ["Checkbox 1", "Checkbox 2", "Checkbox 3"], max: 2 };
 		const checkedItems = new Set<string>();
-		render(<UserCheckboxes checkboxes={checkboxes} checkedItems={checkedItems} path="path1" />);
+		render(<BotCheckboxes checkboxes={checkboxes} checkedItems={checkedItems} path="path1" />);
 
 		const checkbox1 = screen.getByText("Checkbox 1");
 		const checkbox2 = screen.getByText("Checkbox 2");
@@ -111,7 +111,7 @@ describe("UserCheckboxes Component", () => {
 	it("submits selected checkboxes on next button click", () => {
 		const checkboxes = { items: ["Checkbox 1", "Checkbox 2"], sendOutput: true };
 		const checkedItems = new Set<string>();
-		const {container} = render(<UserCheckboxes checkboxes={checkboxes} checkedItems={checkedItems} path="path1" />);
+		const {container} = render(<BotCheckboxes checkboxes={checkboxes} checkedItems={checkedItems} path="path1" />);
 
 		const checkbox1 = screen.getByText("Checkbox 1");
 		fireEvent.mouseDown(checkbox1);
@@ -130,7 +130,7 @@ describe("UserCheckboxes Component", () => {
 		const mockPaths = { paths: ["path1", "path2"] };
 		(usePathsContext as jest.Mock).mockReturnValue(mockPaths);
 
-		render(<UserCheckboxes checkboxes={checkboxes} checkedItems={new Set()} path="path1" />);
+		render(<BotCheckboxes checkboxes={checkboxes} checkedItems={new Set()} path="path1" />);
 
 		const checkbox1 = screen.getByText("Checkbox 1");
 

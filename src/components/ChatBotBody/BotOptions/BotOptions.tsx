@@ -7,7 +7,7 @@ import { useStylesContext } from "../../../context/StylesContext";
 import { usePathsContext } from "../../../context/PathsContext";
 import { Flow } from "../../../types/Flow";
 
-import "./UserOptions.css";
+import "./BotOptions.css";
 
 /**
  * Supports showing of options for user to select.
@@ -15,7 +15,7 @@ import "./UserOptions.css";
  * @param options array representing options to show
  * @param path path associated with the current block
  */
-const UserOptions = ({
+const BotOptions = ({
 	options,
 	path,
 }: {
@@ -123,4 +123,4 @@ const UserOptions = ({
 	);
 };
 
-export default UserOptions;
+export default BotOptions;
