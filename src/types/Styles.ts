@@ -29,6 +29,7 @@ export type Styles = {
 	loadingSpinnerStyle?: React.CSSProperties;
 	mediaDisplayContainerStyle?: React.CSSProperties;
 	chatButtonStyle?: React.CSSProperties;
+	chatButtonHoveredStyle?: React.CSSProperties;
 	chatHistoryButtonStyle?: React.CSSProperties;
 	chatHistoryButtonHoveredStyle?: React.CSSProperties;
 	sendButtonStyle?: React.CSSProperties;

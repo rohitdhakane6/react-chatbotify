@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useChatWindowInternal } from "../../hooks/internal/useChatWindowInternal";
 import { useBotStatesContext } from "../../context/BotStatesContext";
 import { useSettingsContext } from "../../context/SettingsContext";
@@ -21,11 +23,21 @@ const ChatBotButton = () => {
 	// handles chat window
 	const { isChatWindowOpen, toggleChatWindow } = useChatWindowInternal();
 
+	// tracks if chat button is hovered
+	const [isHovered, setIsHovered] = useState<boolean>(false);
+
 	// styles for chat button
 	const chatButtonStyle: React.CSSProperties = {
 		backgroundImage: `linear-gradient(to right, ${settings.general?.secondaryColor},
 			${settings.general?.primaryColor})`,
 		...styles.chatButtonStyle
+	};
+
+	// styles for hovered chat button
+	const chatButtonHoveredStyle: React.CSSProperties = {
+		transform: "scale(1.05)",
+		...styles.chatButtonStyle, // by default inherit the base style
+		...styles.chatButtonHoveredStyle
 	};
 
 	// styles for chat icon
@@ -35,6 +47,20 @@ const ChatBotButton = () => {
 		width: 75,
 		height: 75,
 		...styles.chatIconStyle
+	};
+
+	/**
+	 * Handles mouse enter event on chat message prompt.
+	 */
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+
+	/**
+	 * Handles mouse leave event on chat message prompt.
+	 */
+	const handleMouseLeave = () => {
+		setIsHovered(false);
 	};
 
 	/**
@@ -64,8 +90,10 @@ const ChatBotButton = () => {
 				<div
 					aria-label={settings.ariaLabel?.chatButton ?? "open chat"}
 					role="button"
-					style={chatButtonStyle}
+					style={isHovered ? chatButtonHoveredStyle : chatButtonStyle}
 					className={`rcb-toggle-button ${isChatWindowOpen ? "rcb-button-hide" : "rcb-button-show"}`}
+					onMouseEnter={handleMouseEnter}
+					onMouseLeave={handleMouseLeave}
 					onClick={() => toggleChatWindow(true)}
 				>
 					{renderButton()}

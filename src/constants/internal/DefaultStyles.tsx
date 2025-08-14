@@ -28,6 +28,7 @@ export const DefaultStyles: Styles = {
 	loadingSpinnerStyle: {},
 	mediaDisplayContainerStyle: {},
 	chatButtonStyle: {},
+	chatButtonHoveredStyle: {},
 	chatHistoryButtonStyle: {},
 	chatHistoryButtonHoveredStyle: {},
 	sendButtonStyle: {},
