@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## v2.3.0 (14-08-2025)
+
+**Added:**
+- Added a new `chatButtonHoveredStyle`
+- Added support for callback function parameter in `replaceMessages`, `replacePaths`, `replaceToasts`, `replaceSettings` and `replaceStyles`
+
 ## v2.2.0 (06-07-2025)
 
 **Fixed:**
