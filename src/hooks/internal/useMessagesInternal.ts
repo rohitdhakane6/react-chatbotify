@@ -401,12 +401,18 @@ export const useMessagesInternal = () => {
 	/**
 	 * Replaces (overwrites entirely) the current messages with the new messages.
 	 * 
-	 * @param newMessages new messages to set/replace
+	 * @param newMessagesOrUpdater new messages array or a function that receives current messages
+	 * and returns new messages
 	 */
-	const replaceMessages = useCallback((newMessages: Array<Message>) => {
+	const replaceMessages = useCallback((
+		newMessagesOrUpdater: Array<Message> | ((currentMessages: Array<Message>) => Array<Message>)
+	) => {
+		const newMessages = typeof newMessagesOrUpdater === 'function' 
+			? newMessagesOrUpdater(syncedMessagesRef.current) 
+			: newMessagesOrUpdater;
 		setSyncedMessages(newMessages);
 		handlePostMessagesUpdate(newMessages);
-	}, [handlePostMessagesUpdate])
+	}, [handlePostMessagesUpdate, syncedMessagesRef])
 
 	return {
 		simulateStreamMessage,

@@ -157,4 +157,68 @@ describe("useMessagesInternal", () => {
 
 		expect(mockStreamMessageMap.current.has("BOT")).toBeFalsy();
 	});
+
+	it("should replace messages with array correctly", async () => {
+		const newMessages: Message[] = [
+			{
+				id: "msg-1",
+				content: "New message 1",
+				sender: "BOT",
+				type: "text",
+				timestamp: String(Date.now()),
+			},
+			{
+				id: "msg-2",
+				content: "New message 2",
+				sender: "USER",
+				type: "text",
+				timestamp: String(Date.now()),
+			},
+		];
+
+		const { result } = renderHook(() => useMessagesInternal());
+
+		await act(async () => {
+			result.current.replaceMessages(newMessages);
+		});
+
+		expect(setSyncedMessagesMock).toHaveBeenCalledWith(newMessages);
+	});
+
+	it("should replace messages with callback function correctly", async () => {
+		const existingMessages: Message[] = [
+			{
+				id: "existing-1",
+				content: "Existing message",
+				sender: "BOT",
+				type: "text",
+				timestamp: String(Date.now()),
+			},
+		];
+
+		(useMessagesContext as jest.Mock).mockReturnValue({
+			messages: existingMessages,
+			setSyncedMessages: setSyncedMessagesMock,
+			syncedMessagesRef: { current: existingMessages },
+		});
+
+		const { result } = renderHook(() => useMessagesInternal());
+
+		await act(async () => {
+			result.current.replaceMessages((currentMessages) => {
+				return currentMessages.map(msg => ({
+					...msg,
+					content: msg.content + " - Updated",
+				}));
+			});
+		});
+
+		// The callback should use syncedMessagesRef.current, so it gets the existing messages
+		expect(setSyncedMessagesMock).toHaveBeenCalledWith([
+			{
+				...existingMessages[0],
+				content: "Existing message - Updated",
+			},
+		]);
+	});
 });
