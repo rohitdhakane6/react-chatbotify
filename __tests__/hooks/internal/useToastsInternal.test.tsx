@@ -192,6 +192,9 @@ describe('useToastsInternal', () => {
 		act(() => {
 			result.current.replaceToasts((currentToasts) => [...currentToasts, { id: '4', content: '4' }]);
 		});
-		expect(mockToastsContext.setSyncedToasts).toHaveBeenCalledWith([...mockToastsContext.toasts, { id: '4', content: '4' }]);
+		expect(mockToastsContext.setSyncedToasts).toHaveBeenCalledWith([
+			...mockToastsContext.toasts, 
+			{ id: '4', content: '4' }
+		]);
 	});
 });

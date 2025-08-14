@@ -25,7 +25,11 @@ const TestComponent = () => {
 describe("SettingsContext", () => {
 	it("provides the correct default values", () => {
 		render(
-			<SettingsProvider settings={DefaultSettings} setSyncedSettings={() => null} syncedSettingsRef={{ current: DefaultSettings }}>
+			<SettingsProvider
+				settings={DefaultSettings}
+				setSyncedSettings={() => null}
+				syncedSettingsRef={{ current: DefaultSettings }}
+			>
 				<TestComponent />
 			</SettingsProvider>
 		);
@@ -46,7 +50,11 @@ describe("SettingsContext", () => {
 		};
 
 		const { rerender } = render(
-			<SettingsProvider settings={currentSettings} setSyncedSettings={mockSetSettings} syncedSettingsRef={{ current: currentSettings }}>
+			<SettingsProvider
+				settings={currentSettings}
+				setSyncedSettings={mockSetSettings}
+				syncedSettingsRef={{ current: currentSettings }}
+			>
 				<TestComponent />
 			</SettingsProvider>
 		);
@@ -54,7 +62,11 @@ describe("SettingsContext", () => {
 		screen.getByTestId("updateSettings").click();
 
 		rerender(
-			<SettingsProvider settings={currentSettings} setSyncedSettings={mockSetSettings} syncedSettingsRef={{ current: currentSettings }}>
+			<SettingsProvider
+				settings={currentSettings}
+				setSyncedSettings={mockSetSettings}
+				syncedSettingsRef={{ current: currentSettings }}
+			>
 				<TestComponent />
 			</SettingsProvider>
 		);
