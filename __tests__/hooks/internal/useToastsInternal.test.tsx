@@ -177,4 +177,21 @@ describe('useToastsInternal', () => {
 		});
 		expect(mockRcbEventInternal.dispatchRcbEvent).toHaveBeenCalledWith(RcbEvent.DISMISS_TOAST, { toast });
 	});
+
+	it('should replace toasts with new toasts object', () => {
+		const newToasts = [{ id: '4', content: '4' }];
+		const { result } = renderHook(() => useToastsInternal());
+		act(() => {
+			result.current.replaceToasts(newToasts);
+		});
+		expect(mockToastsContext.setSyncedToasts).toHaveBeenCalledWith(newToasts);
+	});
+
+	it('should replace toasts with callback function correctly', () => {
+		const { result } = renderHook(() => useToastsInternal());
+		act(() => {
+			result.current.replaceToasts((currentToasts) => [...currentToasts, { id: '4', content: '4' }]);
+		});
+		expect(mockToastsContext.setSyncedToasts).toHaveBeenCalledWith([...mockToastsContext.toasts, { id: '4', content: '4' }]);
+	});
 });

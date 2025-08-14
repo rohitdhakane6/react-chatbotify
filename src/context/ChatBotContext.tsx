@@ -8,6 +8,7 @@ import { PathsProvider } from "./PathsContext";
 import { SettingsProvider } from "./SettingsContext";
 import { StylesProvider } from "./StylesContext";
 import { ToastsProvider } from "./ToastsContext";
+import { useSyncedRefState } from "../hooks/internal/useSyncedRefState";
 import { Flow } from "../types/Flow";
 import { Settings } from "../types/Settings";
 import { Styles } from "../types/Styles";
@@ -36,10 +37,10 @@ const ChatBotProvider = ({
 	const botFlowRef = useRef<Flow>({});
 
 	// handles bot settings
-	const [botSettings, setBotSettings] = useState<Settings>({});
+	const [botSettings, setSyncedBotSettings, syncedBotSettingsRef] = useSyncedRefState<Settings>({});
 
 	// handles bot styles
-	const [botStyles, setBotStyles] = useState<Styles>({});
+	const [botStyles, setSyncedBotStyles, syncedBotStylesRef] = useSyncedRefState<Styles>({});
 
 	// handles DOM loaded event to ensure chatbot is loaded after DOM is ready (necessary for SSR support)
 	const [isDomLoaded, setIsDomLoaded] = useState<boolean>(false);
@@ -75,8 +76,8 @@ const ChatBotProvider = ({
 			styleRootRef.current.textContent = combinedConfig.cssStylesText;
 		}
 		// applies combined bot settings and styles
-		setBotSettings(combinedConfig.settings);
-		setBotStyles(combinedConfig.inlineStyles);
+		setSyncedBotSettings(combinedConfig.settings);
+		setSyncedBotStyles(combinedConfig.inlineStyles);
 	};
 
 	if (!isDomLoaded) {
@@ -86,8 +87,16 @@ const ChatBotProvider = ({
 	return (
 		<div style={{ fontFamily: botSettings.general?.fontFamily }}>
 			<ChatBotContext.Provider value={{ loadConfig }}>
-				<SettingsProvider settings={botSettings} setSettings={setBotSettings}>
-					<StylesProvider styles={botStyles} setStyles={setBotStyles}>
+				<SettingsProvider
+					settings={botSettings}
+					setSyncedSettings={setSyncedBotSettings}
+					syncedSettingsRef={syncedBotSettingsRef}
+				>
+					<StylesProvider
+						styles={botStyles}
+						setSyncedStyles={setSyncedBotStyles}
+						syncedStylesRef={syncedBotStylesRef}
+					>
 						<ToastsProvider>
 							<BotRefsProvider botIdRef={botIdRef} flowRef={botFlowRef}>
 								<PathsProvider>

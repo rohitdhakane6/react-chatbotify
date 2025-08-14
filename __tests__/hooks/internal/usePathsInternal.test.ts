@@ -102,4 +102,25 @@ describe("usePathsInternal Hook", () => {
 
 		expect(mockSetSyncedPaths).not.toHaveBeenCalled();
 	});
+
+	it("should replace paths with new paths object", () => {
+		const newPaths = ["newPath1", "newPath2"];
+		const { result } = renderHook(() => usePathsInternal());
+
+		act(() => {
+			result.current.replacePaths(newPaths);
+		});
+
+		expect(mockSetSyncedPaths).toHaveBeenCalledWith(newPaths);
+	});
+
+	it("should replace paths with callback function correctly", () => {
+		const { result } = renderHook(() => usePathsInternal());
+
+		act(() => {
+			result.current.replacePaths((currentPaths) => [...currentPaths, "newPath3"]);
+		});
+
+		expect(mockSetSyncedPaths).toHaveBeenCalledWith([...mockPaths, "newPath3"]);
+	});
 });

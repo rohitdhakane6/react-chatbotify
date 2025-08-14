@@ -9,7 +9,7 @@ import { Styles } from "../../types/Styles";
  */
 export const useStylesInternal = () => {
 	// handles styles
-	const { styles, setStyles } = useStylesContext();
+	const { styles, setSyncedStyles, syncedStylesRef } = useStylesContext();
 
 	/**
 	 * Updates the styles for the chatbot.
@@ -20,17 +20,23 @@ export const useStylesInternal = () => {
 		if (!fields || Object.keys(fields).length === 0) {
 			return;
 		}
-		setStyles(deepClone(getCombinedConfig(fields, styles) as Styles));
+		setSyncedStyles(deepClone(getCombinedConfig(fields, styles) as Styles));
 	}, [styles])
 
 	/**
 	 * Replaces (overwrites entirely) the current styles with the new styles.
 	 * 
-	 * @param newStyles new styles to set/replace
+	 * @param newStylesOrUpdater new styles or a function that receives current styles
+	 * and returns new styles
 	 */
-	const replaceStyles = useCallback((newStyles: Styles) => {
-		setStyles(newStyles);
-	}, [])
+	const replaceStyles = useCallback((
+		newStylesOrUpdater: Styles | ((currentStyles: Styles) => Styles)
+	) => {
+		const newStyles = typeof newStylesOrUpdater === 'function'
+			? newStylesOrUpdater(syncedStylesRef.current)
+			: newStylesOrUpdater;
+		setSyncedStyles(newStyles);
+	}, [syncedStylesRef])
 
 	return {
 		styles,

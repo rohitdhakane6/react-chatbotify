@@ -1,4 +1,4 @@
-import { useContext, createContext, Dispatch, SetStateAction } from "react";
+import { useContext, createContext, Dispatch, SetStateAction, MutableRefObject } from "react";
 
 import { Styles } from "../types/Styles";
 import { DefaultStyles } from "../constants/internal/DefaultStyles";
@@ -8,9 +8,14 @@ import { DefaultStyles } from "../constants/internal/DefaultStyles";
  */
 type StylesContextType = {
 	styles: Styles;
-	setStyles: Dispatch<SetStateAction<Styles>>;
+	setSyncedStyles: Dispatch<SetStateAction<Styles>>;
+	syncedStylesRef: MutableRefObject<Styles>;
 };
-const StylesContext = createContext<StylesContextType>({styles: {}, setStyles: () => null});
+const StylesContext = createContext<StylesContextType>({
+	styles: {},
+	setSyncedStyles: () => null,
+	syncedStylesRef: {current: {}}
+});
 const useStylesContext = () => useContext(StylesContext);
 
 /**
@@ -19,14 +24,16 @@ const useStylesContext = () => useContext(StylesContext);
 const StylesProvider = ({
 	children,
 	styles = DefaultStyles,
-	setStyles
+	setSyncedStyles,
+	syncedStylesRef,
 }: {
 	children: React.ReactNode;
 	styles: Styles;
-	setStyles: Dispatch<SetStateAction<Styles>>;
+	setSyncedStyles: Dispatch<SetStateAction<Styles>>;
+	syncedStylesRef: MutableRefObject<Styles>;
 }) => {
 	return (
-		<StylesContext.Provider value={{ styles, setStyles }}>
+		<StylesContext.Provider value={{ styles, setSyncedStyles, syncedStylesRef }}>
 			{children}
 		</StylesContext.Provider>
 	);

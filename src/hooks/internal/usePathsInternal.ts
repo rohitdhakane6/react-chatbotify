@@ -231,11 +231,17 @@ export const usePathsInternal = () => {
 	 * Note that this does not trigger handlePathChange and that goToPath is the only
 	 * valid approach for triggering path processing behavior.
 	 * 
-	 * @param newPaths new paths to set/replace
+	 * @param newPathsOrUpdater new paths array or a function that receives current paths
+	 * and returns new paths
 	 */
-	const replacePaths = useCallback((newPaths: Array<string>) => {
+	const replacePaths = useCallback((
+		newPathsOrUpdater: Array<string> | ((currentPaths: Array<string>) => Array<string>)
+	) => {
+		const newPaths = typeof newPathsOrUpdater === 'function'
+			? newPathsOrUpdater(syncedPathsRef.current)
+			: newPathsOrUpdater;
 		setSyncedPaths(newPaths);
-	}, []);
+	}, [syncedPathsRef]);
 
 	return {
 		getCurrPath,

@@ -9,12 +9,12 @@ import { DefaultSettings } from "../../src/constants/internal/DefaultSettings";
 import { Settings } from "../../src/types/Settings";
 
 const TestComponent = () => {
-	const { settings, setSettings } = useSettingsContext();
+	const { settings, setSyncedSettings } = useSettingsContext();
 
 	return (
 		<div>
 			<p data-testid="settings">{JSON.stringify(settings)}</p>
-			<button data-testid="updateSettings" onClick={() => setSettings((prevSettings) => ({ ...prevSettings, 
+			<button data-testid="updateSettings" onClick={() => setSyncedSettings((prevSettings) => ({ ...prevSettings, 
 				general: { ...prevSettings.general, primaryColor: '#123456' } }))}>
 				Update Settings
 			</button>
@@ -25,7 +25,7 @@ const TestComponent = () => {
 describe("SettingsContext", () => {
 	it("provides the correct default values", () => {
 		render(
-			<SettingsProvider settings={DefaultSettings} setSettings={() => null}>
+			<SettingsProvider settings={DefaultSettings} setSyncedSettings={() => null} syncedSettingsRef={{ current: DefaultSettings }}>
 				<TestComponent />
 			</SettingsProvider>
 		);
@@ -46,7 +46,7 @@ describe("SettingsContext", () => {
 		};
 
 		const { rerender } = render(
-			<SettingsProvider settings={currentSettings} setSettings={mockSetSettings}>
+			<SettingsProvider settings={currentSettings} setSyncedSettings={mockSetSettings} syncedSettingsRef={{ current: currentSettings }}>
 				<TestComponent />
 			</SettingsProvider>
 		);
@@ -54,7 +54,7 @@ describe("SettingsContext", () => {
 		screen.getByTestId("updateSettings").click();
 
 		rerender(
-			<SettingsProvider settings={currentSettings} setSettings={mockSetSettings}>
+			<SettingsProvider settings={currentSettings} setSyncedSettings={mockSetSettings} syncedSettingsRef={{ current: currentSettings }}>
 				<TestComponent />
 			</SettingsProvider>
 		);
@@ -82,7 +82,11 @@ describe("SettingsContext", () => {
 		};
 
 		render(
-			<SettingsProvider settings={customSettings} setSettings={() => null}>
+			<SettingsProvider
+				settings={customSettings}
+				setSyncedSettings={() => null}
+				syncedSettingsRef={{ current: customSettings }}
+			>
 				<TestComponent />
 			</SettingsProvider>
 		);

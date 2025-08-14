@@ -15,38 +15,42 @@ jest.mock("../../../src/utils/configParser", () => ({
  * Test for useStylesInternal hook.
  */
 describe("useStylesInternal Hook", () => {
-	const setStylesMock = jest.fn();
-	const stylesMock = {
+	const setSyncedStylesMock = jest.fn();
+	const mockStyles = {
 		bodyStyle: {}
 	}
 
 	beforeEach(() => {
 		jest.clearAllMocks();
-		(useStylesContext as jest.Mock).mockReturnValue({ styles: stylesMock, setStyles: setStylesMock});
+		(useStylesContext as jest.Mock).mockReturnValue({
+			styles: mockStyles,
+			setSyncedStyles: setSyncedStylesMock,
+			syncedStylesRef: { current: mockStyles },
+		});
 	})
 
-	// Test to ensure initial values (styels and setStyles) are returned correctly from the hook
+	// Test to ensure initial values (styels and setSyncedStyles) are returned correctly from the hook
 	it("should return initial values from context", () => {
 		const { result } = renderHook(() => useStylesInternal());
 
-		expect(result.current.styles).toEqual(stylesMock);
+		expect(result.current.styles).toEqual(mockStyles);
 		expect(result.current.replaceStyles).toEqual(expect.any(Function));
 		expect(result.current.updateStyles).toEqual(expect.any(Function));
 	});
 
-	it("should call setStyles from context, when styles are updated", () => {
+	it("should call setSyncedStyles from context, when styles are updated", () => {
 		const { result } = renderHook(() => useStylesInternal());
 		const styles = { tooltipStyle: {} };
 
 		act(() => {
 			result.current.updateStyles(styles);
 		});
-		// Argument passed to setStyles is not checked, because it is transformed with 
+		// Argument passed to setSyncedStyles is not checked, because it is transformed with 
 		// deepClone() and getCombinedConfig()
-		expect(setStylesMock).toHaveBeenCalled();
+		expect(setSyncedStylesMock).toHaveBeenCalled();
 	});
 
-	it("should call setStyles from context with correct value, when styles are replaced", () => {
+	it("should call setSyncedStyles from context with correct value, when styles are replaced", () => {
 		const { result } = renderHook(() => useStylesInternal());
 		const styles = { notificationBadgeStyle: {} };
 
@@ -54,6 +58,22 @@ describe("useStylesInternal Hook", () => {
 			result.current.replaceStyles(styles);
 		});
 
-		expect(setStylesMock).toHaveBeenCalledWith(styles);
+		expect(setSyncedStylesMock).toHaveBeenCalledWith(styles);
+	});
+
+	it("should replace styles with callback function correctly", () => {
+		const { result } = renderHook(() => useStylesInternal());
+
+		act(() => {
+			result.current.replaceStyles((currentStyles) => ({
+				...currentStyles,
+				newStyle: {},
+			}));
+		});
+
+		expect(setSyncedStylesMock).toHaveBeenCalledWith({
+			...mockStyles,
+			newStyle: {},
+		});
 	});
 });

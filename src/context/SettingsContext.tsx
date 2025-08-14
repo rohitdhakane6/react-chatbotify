@@ -1,4 +1,4 @@
-import { useContext, createContext, Dispatch, SetStateAction } from "react";
+import { useContext, createContext, Dispatch, SetStateAction, MutableRefObject } from "react";
 
 import { Settings } from "../types/Settings";
 import { DefaultSettings } from "../constants/internal/DefaultSettings";
@@ -8,9 +8,14 @@ import { DefaultSettings } from "../constants/internal/DefaultSettings";
  */
 type SettingsContextType = {
 	settings: Settings;
-	setSettings: Dispatch<SetStateAction<Settings>>;
+	setSyncedSettings: Dispatch<SetStateAction<Settings>>;
+	syncedSettingsRef: MutableRefObject<Settings>;
 };
-const SettingsContext = createContext<SettingsContextType>({settings: {}, setSettings: () => null});
+const SettingsContext = createContext<SettingsContextType>({
+	settings: {},
+	setSyncedSettings: () => null,
+	syncedSettingsRef: {current: {}}
+});
 const useSettingsContext = () => useContext(SettingsContext);
 
 /**
@@ -19,14 +24,16 @@ const useSettingsContext = () => useContext(SettingsContext);
 const SettingsProvider = ({
 	children,
 	settings = DefaultSettings,
-	setSettings
+	setSyncedSettings,
+	syncedSettingsRef,
 }: {
 	children: React.ReactNode;
 	settings: Settings;
-	setSettings: Dispatch<SetStateAction<Settings>>;
+	setSyncedSettings: Dispatch<SetStateAction<Settings>>;
+	syncedSettingsRef: MutableRefObject<Settings>;
 }) => {
 	return (
-		<SettingsContext.Provider value={{ settings, setSettings }}>
+		<SettingsContext.Provider value={{ settings, setSyncedSettings, syncedSettingsRef }}>
 			{children}
 		</SettingsContext.Provider>
 	);

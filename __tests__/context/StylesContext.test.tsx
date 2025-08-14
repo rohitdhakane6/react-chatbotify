@@ -8,12 +8,12 @@ import '@testing-library/jest-dom';
 
 // Mocking a child component to test context
 const MockChild = () => {
-	const { styles, setStyles } = useStylesContext();
+	const { styles, setSyncedStyles } = useStylesContext();
     
 	return (
 		<div>
 			<p>Current Styles: {JSON.stringify(styles)}</p>
-			<button onClick={() => setStyles({ ...styles, chatWindowStyle: { backgroundColor: 'blue' } })}>
+			<button onClick={() => setSyncedStyles({ ...styles, chatWindowStyle: { backgroundColor: 'blue' } })}>
 				Change Chat Window Style
 			</button>
 		</div>
@@ -28,7 +28,11 @@ describe('StylesProvider', () => {
 
 	test('provides default styles', () => {
 		render(
-			<StylesProvider styles={DefaultStyles} setStyles={jest.fn()}>
+			<StylesProvider
+				styles={DefaultStyles}
+				setSyncedStyles={jest.fn()}
+				syncedStylesRef={{ current: DefaultStyles }}
+			>
 				<MockChild />
 			</StylesProvider>
 		);
@@ -38,10 +42,14 @@ describe('StylesProvider', () => {
 		expect(stylesElement).toBeInTheDocument();
 	});
 
-	test('allows updating styles through setStyles', () => {
+	test('allows updating styles through setSyncedStyles', () => {
 		const setStylesMock = jest.fn();
 		render(
-			<StylesProvider styles={DefaultStyles} setStyles={setStylesMock}>
+			<StylesProvider
+				styles={DefaultStyles}
+				setSyncedStyles={setStylesMock}
+				syncedStylesRef={{ current: DefaultStyles }}
+			>
 				<MockChild />
 			</StylesProvider>
 		);
@@ -52,7 +60,7 @@ describe('StylesProvider', () => {
 			button.click();
 		});
 
-		// Verify that setStyles was called with the updated styles
+		// Verify that setSyncedStyles was called with the updated styles
 		expect(setStylesMock).toHaveBeenCalledWith({
 			...DefaultStyles,
 			chatWindowStyle: { backgroundColor: 'blue' },

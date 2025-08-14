@@ -16,16 +16,15 @@ jest.mock("../../../src/utils/configParser", () => ({
 }));
 
 describe("useSettingsInternal", () => {
-	const mockSetSettings = jest.fn();
-	const mockReplaceSettings = jest.fn();
+	const setSyncedSettingsMock = jest.fn();
 	const mockSettings: Settings = { general: { primaryColor: "red" } };
 
 	beforeEach(() => {
 		jest.clearAllMocks();
 		(useSettingsContext as jest.Mock).mockReturnValue({
 			settings: mockSettings,
-			setSettings: mockSetSettings,
-			replaceSettings: mockReplaceSettings,
+			setSyncedSettings: setSyncedSettingsMock,
+			syncedSettingsRef: { current: mockSettings },
 		});
 	});
 
@@ -61,7 +60,7 @@ describe("useSettingsInternal", () => {
 			mockSettings
 		);
 		expect(deepClone).toHaveBeenCalledWith(mockCombinedConfig);
-		expect(mockSetSettings).toHaveBeenCalledWith(mockCombinedConfig);
+		expect(setSyncedSettingsMock).toHaveBeenCalledWith(mockCombinedConfig);
 	});
 
 	it("should handle updateSettings with empty fields", () => {
@@ -76,6 +75,39 @@ describe("useSettingsInternal", () => {
 
 		expect(getCombinedConfig).not.toHaveBeenCalledWith({}, mockSettings);
 		expect(deepClone).not.toHaveBeenCalledWith(mockSettings);
-		expect(mockSetSettings).not.toHaveBeenCalledWith(mockSettings);
+		expect(setSyncedSettingsMock).not.toHaveBeenCalledWith(mockSettings);
+	});
+
+	it("should replace settings with new settings object", () => {
+		const newSettings: Settings = { general: { primaryColor: "blue" } };
+		const { result } = renderHook(() => useSettingsInternal());
+
+		act(() => {
+			result.current.replaceSettings(newSettings);
+		});
+
+		expect(setSyncedSettingsMock).toHaveBeenCalledWith(newSettings);
+	});
+
+	it("should replace settings with callback function correctly", () => {
+		const { result } = renderHook(() => useSettingsInternal());
+
+		act(() => {
+			result.current.replaceSettings((currentSettings) => ({
+				...currentSettings,
+				general: {
+					...currentSettings.general,
+					primaryColor: "blue",
+				}
+			}));
+		});
+
+		expect(setSyncedSettingsMock).toHaveBeenCalledWith({
+			...mockSettings,
+			general: {
+				...mockSettings.general,
+				primaryColor: "blue",
+			}
+		});
 	});
 });

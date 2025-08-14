@@ -33,15 +33,23 @@ const TestChatBotProvider: React.FC<TestChatBotProviderProps> = ({
 	initialStyles = DefaultStyles,
 }) => {
 	// Initialize settings state
-	const [settings, setSettings] = useState<Settings>(initialSettings);
+	const [settings, setSyncedSettings] = useState<Settings>(initialSettings);
 	
 	// Initialize styles state
-	const [styles, setStyles] = useState<Styles>(initialStyles);
+	const [styles, setSyncedStyles] = useState<Styles>(initialStyles);
 
 	return (
 		<ChatBotContext.Provider value={{ loadConfig: jest.fn() }}>
-			<SettingsProvider settings={settings} setSettings={setSettings}>
-				<StylesProvider styles={styles} setStyles={setStyles}>
+			<SettingsProvider
+				settings={settings}
+				setSyncedSettings={setSyncedSettings}
+				syncedSettingsRef={{ current: settings }}
+			>
+				<StylesProvider
+					styles={styles}
+					setSyncedStyles={setSyncedStyles}
+					syncedStylesRef={{ current: styles }}
+				>
 					<ToastsProvider>
 						<BotRefsProvider botIdRef={{ current: '' }} flowRef={{ current: {} }}>
 							<PathsProvider>

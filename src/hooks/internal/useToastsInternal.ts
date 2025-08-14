@@ -94,12 +94,18 @@ export const useToastsInternal = () => {
 
 	/**
 	 * Replaces (overwrites entirely) the current toasts with the new toasts.
-	 * 
-	 * @param newToasts new toasts to set/replace
+	 *
+	 * @param newToastsOrUpdater new toasts array or a function that receives current toasts
+	 * and returns new toasts
 	 */
-	const replaceToasts = useCallback((newToasts: Array<Toast>) => {
+	const replaceToasts = useCallback((
+		newToastsOrUpdater: Array<Toast> | ((currentToasts: Array<Toast>) => Array<Toast>)
+	) => {
+		const newToasts = typeof newToastsOrUpdater === 'function'
+			? newToastsOrUpdater(syncedToastsRef.current)
+			: newToastsOrUpdater;
 		setSyncedToasts(newToasts);
-	}, [])
+	}, [syncedToastsRef])
 
 	return {
 		showToast,

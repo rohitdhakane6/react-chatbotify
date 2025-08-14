@@ -9,7 +9,7 @@ import { Settings } from "../../types/Settings";
  */
 export const useSettingsInternal = () => {
 	// handles settings
-	const { settings, setSettings } = useSettingsContext();
+	const { settings, setSyncedSettings, syncedSettingsRef } = useSettingsContext();
 
 	/**
 	 * Updates the settings for the chatbot.
@@ -20,17 +20,23 @@ export const useSettingsInternal = () => {
 		if (!fields || Object.keys(fields).length === 0) {
 			return;
 		}
-		setSettings(deepClone(getCombinedConfig(fields, settings) as Settings));
+		setSyncedSettings(deepClone(getCombinedConfig(fields, settings) as Settings));
 	}, [settings])
 
 	/**
 	 * Replaces (overwrites entirely) the current settings with the new settings.
 	 * 
-	 * @param newSettings new settings to set/replace
+	 * @param newSettingsOrUpdater new settings or a function that receives current settings
+	 * and returns new settings
 	 */
-	const replaceSettings = useCallback((newSettings: Settings) => {
-		setSettings(newSettings);
-	}, [])
+	const replaceSettings = useCallback((
+		newSettingsOrUpdater: Settings | ((currentSettings: Settings) => Settings)
+	) => {
+		const newSettings = typeof newSettingsOrUpdater === 'function'
+			? newSettingsOrUpdater(syncedSettingsRef.current)
+			: newSettingsOrUpdater;
+		setSyncedSettings(newSettings);
+	}, [syncedSettingsRef])
 
 	return {
 		settings,
