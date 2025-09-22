@@ -281,3 +281,111 @@ describe("UserMessage Component", () => {
 
 	
 });
+/**
+ * Additional coverage for edge cases and style override behavior.
+ * Test framework: Jest
+ * Utilities: @testing-library/react and @testing-library/jest-dom
+ */
+
+describe("UserMessage Component - additional scenarios", () => {
+	const iso = new Date().toISOString();
+
+	it("does not apply offset class when avatar is disabled and isNewSender is false", () => {
+		const message: Message = {
+			id: "offset-no-avatar",
+			content: "No avatar offset",
+			sender: "user",
+			type: "string",
+			timestamp: iso
+		};
+		const settings = { userBubble: { showAvatar: false } };
+
+		renderUserMessage(message, false, settings);
+
+		const bubble = screen.getByText("No avatar offset").closest("div") as HTMLDivElement | null;
+		expect(bubble).not.toHaveClass("rcb-user-message-offset");
+	});
+
+	it("allows styles.userBubbleStyle to override default background and text color", () => {
+		const message: Message = {
+			id: "style-override",
+			content: "Styled colors",
+			sender: "user",
+			type: "string",
+			timestamp: iso
+		};
+		const settings = {
+			styles: {
+				userBubbleStyle: {
+					backgroundColor: "#123456",
+					color: "#111111"
+				}
+			}
+		};
+
+		renderUserMessage(message, true, settings);
+
+		const bubble = screen.getByText("Styled colors").closest("div") as HTMLDivElement | null;
+		expect(bubble).toHaveStyle({
+			backgroundColor: "#123456",
+			color: "#111111"
+		});
+	});
+
+	it("renders empty string content safely and keeps bubble structure", () => {
+		const message: Message = {
+			id: "empty-string",
+			content: "",
+			sender: "user",
+			type: "string",
+			timestamp: iso
+		};
+
+		renderUserMessage(message);
+
+		const bubble = document.querySelector(".rcb-user-message") as HTMLElement | null;
+		expect(bubble).toBeInTheDocument();
+		expect(bubble).toHaveTextContent("");
+	});
+
+	it("wraps JSX content when a contentWrapper is provided", () => {
+		const Wrapper = ({ children }: { children: React.ReactNode }) => (
+			<div data-testid="content-wrapper">{children}</div>
+		);
+
+		const message: Message = {
+			id: "jsx-with-wrapper",
+			content: <span data-testid="jsx-node">Wrapped JSX</span>,
+			sender: "user",
+			type: "object",
+			timestamp: iso,
+			contentWrapper: Wrapper
+		};
+
+		renderUserMessage(message);
+
+		const wrapper = screen.getByTestId("content-wrapper");
+		const inner = screen.getByTestId("jsx-node");
+		expect(wrapper).toBeInTheDocument();
+		expect(wrapper).toContainElement(inner);
+	});
+
+	it("shows avatar with empty avatar URL gracefully", () => {
+		const message: Message = {
+			id: "empty-avatar",
+			content: "Avatar empty URL",
+			sender: "user",
+			type: "string",
+			timestamp: iso
+		};
+		const settings = { userBubble: { showAvatar: true, avatar: "" } };
+
+		renderUserMessage(message, true, settings);
+
+		const avatar = document.querySelector(".rcb-message-user-avatar") as HTMLElement | null;
+		expect(avatar).toBeInTheDocument();
+		expect(avatar).toHaveStyle({
+			backgroundImage: 'url("")'
+		});
+	});
+});
